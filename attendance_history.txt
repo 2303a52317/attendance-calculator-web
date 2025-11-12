@@ -1,0 +1,2 @@
+Total: 12, Attended: 11, Required: 75% -> Attendance: 91.67%
+✅ You meet the required attendance.
