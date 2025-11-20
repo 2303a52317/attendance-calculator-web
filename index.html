@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Attendance Calculator</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Attendance Calculator</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h2>Smart Attendance Calculator</h2>
+    <div class="container fade-in">
+        <h1 class="title slide-down">📘 Smart Attendance Calculator</h1>
 
-    <label>Total Classes Held</label>
-    <input type="number" id="total" placeholder="e.g. 50">
+        <div class="card zoom-in">
+            <label>Total Classes</label>
+            <input type="number" id="total" placeholder="Enter total classes taken" />
+        </div>
 
-    <label>Classes Attended</label>
-    <input type="number" id="attended" placeholder="e.g. 35">
+        <div class="card zoom-in">
+            <label>Attended Classes</label>
+            <input type="number" id="attended" placeholder="Enter attended classes" />
+        </div>
 
-    <label>Required Attendance %</label>
-    <input type="number" id="required" value="75">
+        <button class="btn" onclick="calculate()">Calculate</button>
 
-    <div class="buttons">
-      <button onclick="calculate()">Calculate</button>
-      <button onclick="predictFuture()">Predict Future</button>
-      <button onclick="skipAdvisor()">Skip Advisor</button>
+        <div class="result-box pop-up" id="result"></div>
     </div>
 
-    <p id="result"></p>
-  </div>
+    <footer>
+        <p>Made by Varshitha 💙</p>
+    </footer>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
