@@ -1,25 +1,28 @@
 function calculate() {
-    let total = parseInt(document.getElementById("total").value);
-    let attended = parseInt(document.getElementById("attended").value);
-    let result = document.getElementById("result");
+    const total = parseInt(document.getElementById("total").value);
+    const attended = parseInt(document.getElementById("attended").value);
 
     if (!total || !attended || attended > total) {
-        result.style.display = "block";
-        result.innerHTML = "⚠️ Please enter valid numbers!";
+        alert("Please enter valid numbers!");
         return;
     }
 
-    let percentage = ((attended / total) * 100).toFixed(2);
-    let needed = Math.ceil((0.75 * total) - attended);
+    const percentage = ((attended / total) * 100).toFixed(2);
+    document.getElementById("percentage").innerHTML = `Attendance: ${percentage}%`;
 
-    let msg = `<strong>Attendance: ${percentage}%</strong><br><br>`;
+    let need = "";
+    let bunk = "";
 
     if (percentage < 75) {
-        msg += `📌 You must attend <strong>${needed}</strong> more classes to reach 75%.`;
+        const required = Math.ceil((0.75 * total - attended) / 0.25);
+        need = `📘 You need to attend <b>${required}</b> more classes to reach 75%.`;
     } else {
-        msg += `🎉 You are safe! You can skip <strong>${Math.floor(attended - 0.75 * total)}</strong> classes.`;
+        const canBunk = Math.floor((attended / 0.75) - total);
+        bunk = `🎉 You can still skip <b>${canBunk}</b> classes and stay above 75%.`;
     }
 
-    result.style.display = "block";
-    result.innerHTML = msg;
+    document.getElementById("need").innerHTML = need;
+    document.getElementById("bunk").innerHTML = bunk;
+
+    document.getElementById("resultBox").style.display = "block";
 }
