@@ -3,30 +3,35 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Attendance Calculator</title>
+    <title>Attendance Calculator</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container fade-in">
-        <h1 class="title slide-down">📘 Smart Attendance Calculator</h1>
 
-        <div class="card zoom-in">
-            <label>Total Classes</label>
-            <input type="number" id="total" placeholder="Enter total classes taken" />
+    <div class="container">
+        <h1>Attendance Calculator</h1>
+
+        <div class="input-box">
+            <label>Total Classes Conducted</label>
+            <input type="number" id="total" placeholder="e.g., 60" />
         </div>
 
-        <div class="card zoom-in">
-            <label>Attended Classes</label>
-            <input type="number" id="attended" placeholder="Enter attended classes" />
+        <div class="input-box">
+            <label>Classes Attended</label>
+            <input type="number" id="attended" placeholder="e.g., 45" />
         </div>
 
-        <button class="btn" onclick="calculate()">Calculate</button>
+        <button onclick="calculate()">Calculate</button>
 
-        <div class="result-box pop-up" id="result"></div>
+        <div class="result" id="resultBox">
+            <h2 id="percentage"></h2>
+            <p id="need"></p>
+            <p id="bunk"></p>
+        </div>
     </div>
 
     <footer>
-        <p>Made by Varshitha 💙</p>
+        Made with ❤️ by Varshitha
     </footer>
 
     <script src="script.js"></script>
