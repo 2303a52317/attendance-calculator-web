@@ -1,120 +1,61 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+// Helpers
+function safeInt(v){ v = parseInt(v); return (isNaN(v) || v < 0) ? null : v; }
+
+// 1) Current Attendance
+function calcCurrent(){
+  const t = safeInt(document.getElementById("c_total").value);
+  const a = safeInt(document.getElementById("c_attended").value);
+  const out = document.getElementById("c_result");
+  if(t === null || a === null){ out.textContent = "⚠️ Enter valid non-negative numbers."; return; }
+  if(a > t){ out.textContent = "⚠️ Attended cannot exceed total."; return; }
+  const pct = (t === 0) ? 0 : (a / t) * 100;
+  let text = `Attendance: ${pct.toFixed(2)}%`;
+  if(pct >= 75) {
+    // compute how many you may skip (safe skip while still >=75)
+    // find max x such that a/(t+x) *100 >=75 -> (a)/(t+x) >= 0.75 -> t+x <= a/0.75 -> x <= a/0.75 - t
+    const maxTotalAllowed = a / 0.75;
+    const safeSkips = Math.max(0, Math.floor(maxTotalAllowed - t));
+    text += `\n✅ You meet 75%.\nYou can safely skip ${safeSkips} class(es).`;
+  } else {
+    // classes needed to reach 75%
+    // solve (a + x)/(t + x) >= 0.75 -> x >= (0.75*t - a)/(1-0.75)
+    const r = 0.75;
+    const denom = 1 - r;
+    const x = Math.ceil((r * t - a) / denom);
+    text += `\n❌ You need to attend at least ${Math.max(0,x)} more class(es) to reach 75%.`;
+  }
+  out.textContent = text;
 }
 
-body {
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+// 2) Reach 75%: how many classes to attend
+function calcReach75(){
+  const t = safeInt(document.getElementById("r_total").value);
+  const a = safeInt(document.getElementById("r_attended").value);
+  const out = document.getElementById("r_result");
+  if(t === null || a === null){ out.textContent = "⚠️ Enter valid non-negative numbers."; return; }
+  if(a > t){ out.textContent = "⚠️ Attended cannot exceed total."; return; }
+  if(t === 0 && a === 0){ out.textContent = "If you start from 0, attend classes to build attendance."; return; }
+  const r = 0.75;
+  const denom = 1 - r;
+  if(denom <= 0){ out.textContent = "⚠️ Required percent invalid."; return; }
+  const need = Math.ceil((r * t - a) / denom);
+  if(need <= 0) out.textContent = `🎉 You already have ${((a/t)*100).toFixed(2)}% (or enough).`;
+  else out.textContent = `You must attend ${need} more class(es) (consecutively) to reach 75%.`;
 }
 
-.container {
-    width: 95%;
-    max-width: 420px;
-    background: white;
-    padding: 25px;
-    border-radius: 18px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-.title {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 26px;
-    color: #333;
-}
-
-.card {
-    background: #f5f7ff;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    transition: .3s;
-}
-
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
-}
-
-label {
-    font-size: 15px;
-    color: #444;
-}
-
-input {
-    width: 100%;
-    margin-top: 8px;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: #e8ecff;
-}
-
-.btn {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    background: #2575fc;
-    color: white;
-    font-size: 17px;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: .3s;
-}
-
-.btn:hover {
-    background: #0059d4;
-    transform: scale(1.03);
-}
-
-.result-box {
-    margin-top: 20px;
-    padding: 15px;
-    background: #e8f7ff;
-    border-left: 5px solid #2575fc;
-    border-radius: 12px;
-    display: none;
-}
-
-footer {
-    margin-top: 20px;
-    color: white;
-    font-size: 14px;
-}
-
-/* Animations */
-.fade-in { animation: fade 0.7s ease-in; }
-.slide-down { animation: slide 0.7s ease-out; }
-.zoom-in { animation: zoom 0.7s ease; }
-.pop-up { animation: pop 0.6s ease; }
-
-@keyframes fade {
-    from {opacity:0;} to {opacity:1;}
-}
-
-@keyframes slide {
-    from {transform: translateY(-20px);} to {transform: translateY(0);}
-}
-
-@keyframes zoom {
-    from {transform: scale(0.9);} to {transform: scale(1);}
-}
-
-@keyframes pop {
-    from {transform: scale(0.8); opacity: 0;} 
-    to {transform: scale(1); opacity: 1;}
-}
-
-/* Mobile Friendly */
-@media (max-width: 480px) {
-    .title { font-size: 22px; }
-    .container { padding: 18px; }
+// 3) Skip Advisor: how many can skip now safely
+function calcSkip(){
+  const t = safeInt(document.getElementById("s_total").value);
+  const a = safeInt(document.getElementById("s_attended").value);
+  const out = document.getElementById("s_result");
+  if(t === null || a === null){ out.textContent = "⚠️ Enter valid non-negative numbers."; return; }
+  if(a > t){ out.textContent = "⚠️ Attended cannot exceed total."; return; }
+  // if below 75 already
+  const pct = (t === 0) ? 0 : (a / t) * 100;
+  if(pct < 75){ out.textContent = `⚠️ You are already below 75% (${pct.toFixed(2)}%). Focus on attending.`; return; }
+  // find max x such that a/(t+x) >= 0.75 -> x <= a/0.75 - t
+  const maxTotalAllowed = a / 0.75;
+  let safeSkips = Math.floor(maxTotalAllowed - t);
+  if(safeSkips < 0) safeSkips = 0;
+  out.textContent = `You can skip ${safeSkips} class(es) and still maintain ≥75%. Current: ${pct.toFixed(2)}%`;
 }
