@@ -1,39 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Attendance Calculator</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance Calculator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Attendance Calculator</h1>
+<div class="container">
+    <h1>📘 Smart Attendance Calculator</h1>
 
-        <div class="input-box">
-            <label>Total Classes Conducted</label>
-            <input type="number" id="total" placeholder="e.g., 60" />
-        </div>
-
-        <div class="input-box">
-            <label>Classes Attended</label>
-            <input type="number" id="attended" placeholder="e.g., 45" />
-        </div>
-
-        <button onclick="calculate()">Calculate</button>
-
-        <div class="result" id="resultBox">
-            <h2 id="percentage"></h2>
-            <p id="need"></p>
-            <p id="bunk"></p>
-        </div>
+    <div class="input-group">
+        <label>Total Classes</label>
+        <input type="number" id="total" placeholder="e.g., 60">
     </div>
 
-    <footer>
-        Made with ❤️ by Varshitha
-    </footer>
+    <div class="input-group">
+        <label>Attended Classes</label>
+        <input type="number" id="attended" placeholder="e.g., 45">
+    </div>
 
-    <script src="script.js"></script>
+    <button onclick="calculateAttendance()">Calculate</button>
+
+    <div id="result" class="result"></div>
+</div>
+
+<footer>
+    Made with 💙 by Varshitha
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
