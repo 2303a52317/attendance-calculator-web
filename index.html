@@ -1,60 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Smart Attendance — Mini Tools</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Attendance Calculator</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="page">
-    <header class="top">
-      <h1>📘 Smart Attendance</h1>
-      <p class="subtitle">Quick tools — Current %, Reach 75% & Skip Advisor</p>
-    </header>
+    <div class="container fade-in">
+        <h1 class="title slide-down">📘 Smart Attendance Calculator</h1>
 
-    <main class="grid">
+        <div class="card zoom-in">
+            <label>Total Classes</label>
+            <input type="number" id="total" placeholder="Enter total classes taken" />
+        </div>
 
-      <!-- Current Attendance Card -->
-      <section class="card" id="card-current">
-        <h2>Current Attendance</h2>
-        <label>Total classes held</label>
-        <input type="number" id="c_total" min="0" placeholder="e.g. 50" />
-        <label>Classes attended</label>
-        <input type="number" id="c_attended" min="0" placeholder="e.g. 38" />
-        <button class="btn" onclick="calcCurrent()">Show %</button>
-        <div class="result" id="c_result"></div>
-      </section>
+        <div class="card zoom-in">
+            <label>Attended Classes</label>
+            <input type="number" id="attended" placeholder="Enter attended classes" />
+        </div>
 
-      <!-- Reach 75% Card -->
-      <section class="card" id="card-reach">
-        <h2>Reach 75%</h2>
-        <label>Total classes held</label>
-        <input type="number" id="r_total" min="0" placeholder="e.g. 50" />
-        <label>Classes attended</label>
-        <input type="number" id="r_attended" min="0" placeholder="e.g. 38" />
-        <button class="btn" onclick="calcReach75()">How many to attend?</button>
-        <div class="result" id="r_result"></div>
-      </section>
+        <button class="btn" onclick="calculate()">Calculate</button>
 
-      <!-- Skip Advisor Card -->
-      <section class="card" id="card-skip">
-        <h2>Skip Advisor</h2>
-        <label>Total classes held</label>
-        <input type="number" id="s_total" min="0" placeholder="e.g. 50" />
-        <label>Classes attended</label>
-        <input type="number" id="s_attended" min="0" placeholder="e.g. 38" />
-        <button class="btn" onclick="calcSkip()">How many can I skip?</button>
-        <div class="result" id="s_result"></div>
-      </section>
+        <div class="result-box pop-up" id="result"></div>
+    </div>
 
-    </main>
-
-    <footer class="foot">
-      <small>Made by Varshitha • Share: <a href="https://2303a52317.github.io/attendance-calculator-web/" target="_blank">Live demo</a></small>
+    <footer>
+        <p>Made by Varshitha 💙</p>
     </footer>
-  </div>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
